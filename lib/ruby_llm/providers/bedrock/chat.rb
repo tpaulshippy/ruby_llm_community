@@ -39,7 +39,7 @@ module RubyLLM
           "model/#{@model_id}/invoke"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil, # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
                            cache_prompts: { system: false, user: false, tools: false })
           @model_id = model.id
 
