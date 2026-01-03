@@ -26,7 +26,7 @@ module RubyLLM
       if chunk.tool_call?
         accumulate_tool_calls chunk.tool_calls
       else
-        @content << (chunk.content || '')
+        accumulate_content(chunk.content)
         @thinking << (chunk.thinking || '')
       end
 
@@ -42,7 +42,7 @@ module RubyLLM
 
       Message.new(
         role: :assistant,
-        content: content.empty? ? nil : content,
+        content: content_to_include(content),
         thinking: thinking.empty? ? nil : thinking,
         thinking_signature: @thinking_signature,
         model_id: model_id,
@@ -105,6 +105,19 @@ module RubyLLM
         @content.text.nil? && @content.attachments.empty? ? nil : @content
       else
         @content
+      end
+    end
+
+    def content_to_include(content)
+      case content
+      when nil
+        nil
+      when String
+        content.empty? ? nil : content
+      when Content
+        content.text.nil? && content.attachments.empty? ? nil : content
+      else
+        content
       end
     end
 
