@@ -12,7 +12,7 @@ module RubyLLM
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil, # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
-          cache_prompts: { system: false, user: false, tools: false })
+                           cache_prompts: { system: false, user: false, tools: false })
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages, cache: cache_prompts[:system])
 
@@ -34,9 +34,14 @@ module RubyLLM
         end
 
         def build_base_payload(chat_messages, model, stream, thinking, cache: false)
+          messages = chat_messages.map.with_index do |msg, idx|
+            message_cache = cache if idx == chat_messages.size - 1
+            format_message(msg, thinking_enabled: thinking, cache: message_cache)
+          end
+
           payload = {
             model: model.id,
-            messages: chat_messages.map { |msg| format_message(msg, thinking_enabled: thinking, cache: message_cache) },
+            messages:,
             stream: stream,
             max_tokens: calculate_max_tokens(model, thinking)
           }
