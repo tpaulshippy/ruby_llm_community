@@ -11,7 +11,8 @@ module RubyLLM
 
         module_function
 
-        def render_response_payload(messages, tools:, temperature:, model:, cache_prompts:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_response_payload(messages, tools:, temperature:, model:, cache_prompts:, stream: false, schema: nil, # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+                                    thinking: nil) # rubocop:disable Lint/UnusedMethodArgument
           payload = {
             model: model.id,
             input: format_input(messages),

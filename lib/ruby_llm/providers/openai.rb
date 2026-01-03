@@ -15,12 +15,13 @@ module RubyLLM
         end
       end
 
-      def render_payload(messages, tools:, temperature:, model:, cache_prompts:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
+      def render_payload(messages, tools:, temperature:, model:, cache_prompts:, stream: false, schema: nil, # rubocop:disable Metrics/ParameterLists
+                         thinking: nil)
         @using_responses_api = !audio_input?(messages)
 
         if @using_responses_api
           render_response_payload(messages, tools: tools, temperature: temperature, model: model,
-                                            cache_prompts:, stream:, schema:)
+                                            cache_prompts:, stream:, schema:, thinking:)
         else
           super
         end

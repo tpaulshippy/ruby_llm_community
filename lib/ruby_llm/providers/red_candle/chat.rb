@@ -6,7 +6,8 @@ module RubyLLM
       # Chat implementation for Red Candle provider
       module Chat
         # Override the base complete method to handle local execution
-        def complete(messages, tools:, temperature:, cache_prompts:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+        def complete(messages, tools:, temperature:, cache_prompts:, model:, params: {}, headers: {}, schema: nil, # rubocop:disable Metrics/ParameterLists
+                     thinking: nil, &) # rubocop:disable Lint/UnusedMethodArgument
           _ = headers # Interface compatibility
           _ = cache_prompts # Interface compatibility
           payload = Utils.deep_merge(
