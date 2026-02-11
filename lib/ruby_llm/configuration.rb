@@ -20,6 +20,8 @@ module RubyLLM
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
+                  :bedrock_guardrail_identifier,
+                  :bedrock_guardrail_version,
                   :openrouter_api_key,
                   :ollama_api_base,
                   :gpustack_api_base,

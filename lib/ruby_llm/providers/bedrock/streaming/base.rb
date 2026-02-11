@@ -20,9 +20,11 @@ module RubyLLM
           def stream_response(connection, payload, additional_headers = {}, &block)
             signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", payload:)
             accumulator = StreamAccumulator.new
+            guardrail_headers = build_guardrail_headers
 
             response = connection.post stream_url, payload do |req|
               req.headers.merge! build_headers(signature.headers, streaming: block_given?)
+              req.headers.merge!(guardrail_headers) # Add guardrails AFTER signing
               # Merge additional headers, with existing headers taking precedence
               req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
               req.options.on_data = handle_stream do |chunk|
