@@ -2,8 +2,6 @@
 
 RSpec.describe RubyLLM::Providers::Bedrock do
   describe '#build_guardrail_headers' do
-    let(:provider) { described_class.new }
-
     before do
       RubyLLM.configure do |config|
         config.bedrock_api_key = 'test-key'
@@ -18,6 +16,8 @@ RSpec.describe RubyLLM::Providers::Bedrock do
         config.bedrock_guardrail_version = nil
       end
     end
+
+    let(:provider) { described_class.new(RubyLLM.config) }
 
     context 'when guardrail identifier is configured' do
       before do
